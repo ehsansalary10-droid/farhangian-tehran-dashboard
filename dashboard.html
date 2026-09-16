@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>داشبورد سامانه پایش دانشگاه فرهنگیان تهران</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f3f6fa;
+            color: #263238;
+        }
+
+        /* =========================
+           LAYOUT
+        ========================= */
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+
+            width: 260px;
+            background: linear-gradient(
+                180deg,
+                #0b3558,
+                #08263f
+            );
+
+            color: white;
+            padding: 22px 15px;
+
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+
+            overflow-y: auto;
+        }
+
+
+        .brand {
+
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            margin-bottom: 20px;
+        }
+
+
+        .brand img {
+
+            width: 75px;
+            height: 75px;
+
+            object-fit: contain;
+
+            background: white;
+            border-radius: 50%;
+
+            padding: 5px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .brand h2 {
+
+            font-size: 17px;
+            margin: 5px 0;
+
+            line-height: 1.8;
+        }
+
+
+        .brand span {
+
+            font-size: 11px;
+            color: #b9d1e4;
+        }
+
+
+        .menu-title {
+
+            font-size: 11px;
+            color: #8eafc7;
+
+            margin:
+                20px
+                10px
+                8px;
+        }
+
+
+        .menu a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            text-decoration: none;
+
+            color: #e6f0f7;
+
+            padding: 13px 15px;
+
+            margin-bottom: 5px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+
+        .menu a:hover {
+
+            background: rgba(255,255,255,0.10);
+
+            transform: translateX(-3px);
+        }
+
+
+        .menu a.active {
+
+            background: #1976b9;
+
+            box-shadow:
+                0 5px 15px
+                rgba(0,0,0,0.15);
+        }
+
+
+        .menu-icon {
+
+            width: 25px;
+
+            text-align: center;
+
+            font-size: 18px;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+
+            width: calc(100% - 260px);
+
+            margin-right: 260px;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+
+            height: 80px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                0 30px;
+
+            border-bottom:
+                1px solid #e5eaf0;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 10;
+        }
+
+
+        .top-title h1 {
+
+            margin: 0;
+
+            font-size: 20px;
+
+            color: #17365d;
+        }
+
+
+        .top-title p {
+
+            margin:
+                7px 0 0;
+
+            font-size: 12px;
+
+            color: #8a98a5;
+        }
+
+
+        .admin-badge {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            background: #f2f6fa;
+
+            padding:
+                8px 13px;
+
+            border-radius: 25px;
+
+            font-size: 12px;
+
+            color: #476276;
+        }
+
+
+        .admin-icon {
+
+            width: 32px;
+            height: 32px;
+
+            border-radius: 50%;
+
+            background: #17365d;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .content {
+
+            padding:
+                30px;
+        }
+
+
+        /* =========================
+           WELCOME
+        ========================= */
+
+        .welcome {
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #0f4c81,
+                    #1976b9
+                );
+
+            color: white;
+
+            border-radius: 18px;
+
+            padding:
+                25px 30px;
+
+            margin-bottom: 25px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        .welcome:after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border-radius: 50%;
+
+            left: -60px;
+            top: -90px;
+        }
+
+
+        .welcome h2 {
+
+            margin: 0 0 8px;
+
+            font-size: 21px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .welcome p {
+
+            margin: 0;
+
+            color: #dceefa;
+
+            font-size: 13px;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =========================
+           STAT CARDS
+        ========================= */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(25,55,85,0.07);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            transition: 0.2s;
+
+            border:
+                1px solid #edf1f5;
+        }
+
+
+        .stat-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(25,55,85,0.11);
+        }
+
+
+        .stat-icon {
+
+            width: 55px;
+            height: 55px;
+
+            min-width: 55px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+
+        .blue {
+            background: #e6f2fb;
+        }
+
+        .green {
+            background: #e7f6ed;
+        }
+
+        .orange {
+            background: #fff3df;
+        }
+
+        .purple {
+            background: #f0eafd;
+        }
+
+
+        .stat-info {
+
+            flex: 1;
+        }
+
+
+        .stat-info span {
+
+            display: block;
+
+            color: #7b8a97;
+
+            font-size: 12px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .stat-info strong {
+
+            display: block;
+
+            font-size: 28px;
+
+            color: #17365d;
+        }
+
+
+        /* =========================
+           QUICK ACTIONS
+        ========================= */
+
+        .section {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 22px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(25,55,85,0.06);
+
+            border:
+                1px solid #edf1f5;
+        }
+
+
+        .section-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+
+        .section-header h2 {
+
+            margin: 0;
+
+            color: #17365d;
+
+            font-size: 17px;
+        }
+
+
+        .section-header span {
+
+            color: #98a5af;
+
+            font-size: 11px;
+        }
+
+
+        .actions {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+        }
+
+
+        .action {
+
+            text-decoration: none;
+
+            color: #34495e;
+
+            background: #f7f9fb;
+
+            border:
+                1px solid #e8edf2;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            text-align: center;
+
+            transition: 0.2s;
+        }
+
+
+        .action:hover {
+
+            background: #eef6fc;
+
+            border-color: #cfe4f3;
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        .action-icon {
+
+            font-size: 25px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .action strong {
+
+            display: block;
+
+            color: #17365d;
+
+            font-size: 13px;
+        }
+
+
+        .action small {
+
+            display: block;
+
+            margin-top: 6px;
+
+            color: #8997a2;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           EVALUATION TABLE
+        ========================= */
+
+        .table-wrapper {
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            min-width: 750px;
+        }
+
+
+        th {
+
+            background: #f2f6fa;
+
+            color: #526979;
+
+            padding: 13px;
+
+            font-size: 11px;
+
+            border-bottom:
+                1px solid #e4eaf0;
+
+            white-space: nowrap;
+        }
+
+
+        td {
+
+            padding: 13px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            border-bottom:
+                1px solid #edf1f5;
+
+            color: #536572;
+        }
+
+
+        tr:hover td {
+
+            background: #f9fbfd;
+        }
+
+
+        .score {
+
+            font-weight: bold;
+
+            color: #17365d;
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            padding:
+                6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+
+        .excellent {
+
+            background: #e1f5e8;
+
+            color: #1b7a42;
+        }
+
+
+        .good {
+
+            background: #e1f0fb;
+
+            color: #17649a;
+        }
+
+
+        .medium {
+
+            background: #fff2d8;
+
+            color: #9a6a00;
+        }
+
+
+        .weak {
+
+            background: #fde7e7;
+
+            color: #b52a2a;
+        }
+
+
+        /* =========================
+           UNIVERSITY STRUCTURE
+        ========================= */
+
+        .structure-table th {
+
+            background: #17365d;
+
+            color: white;
+
+            border: none;
+        }
+
+
+        .structure-table td {
+
+            border-bottom:
+                1px solid #edf1f5;
+        }
+
+
+        .occupied-badge {
+
+            background: #e4f6eb;
+
+            color: #21854b;
+
+            padding:
+                5px 10px;
+
+            border-radius: 15px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+
+        .vacant-badge {
+
+            background: #fff0e0;
+
+            color: #b76a00;
+
+            padding:
+                5px 10px;
+
+            border-radius: 15px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 45px 20px;
+
+            color: #8b99a5;
+
+            background: #fafcfd;
+
+            border-radius: 12px;
+        }
+
+
+        .empty-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 15px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+
+            text-align: center;
+
+            color: #91a0ac;
+
+            font-size: 11px;
+
+            padding:
+                10px 0 25px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .cards {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .actions {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+
+                width: 220px;
+            }
+
+            .main {
+
+                width: calc(100% - 220px);
+
+                margin-right: 220px;
+            }
+
+            .content {
+
+                padding: 20px;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+            }
+
+            .main {
+
+                width: 100%;
+
+                margin-right: 0;
+            }
+
+            .app {
+
+                display: block;
+            }
+
+            .topbar {
+
+                position: relative;
+
+                height: auto;
+
+                padding: 18px;
+
+                gap: 15px;
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+            .cards {
+
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+
+                grid-template-columns: 1fr;
+            }
+
+            .welcome {
+
+                padding: 22px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <img
+                src="{{ url_for('static', filename='images/cfu-tehran-logo.png') }}"
+                alt="لوگوی دانشگاه فرهنگیان تهران"
+            >
+
+            <h2>
+                دانشگاه فرهنگیان تهران
+            </h2>
+
+            <span>
+                سامانه ارزیابی و پایش هوشمند
+            </span>
+
+        </div>
+
+
+        <div class="menu-title">
+            منوی اصلی
+        </div>
+
+
+        <nav class="menu">
+
+            <a
+                href="/dashboard"
+                class="active"
+            >
+
+                <span class="menu-icon">🏠</span>
+
+                <span>
+                    داشبورد
+                </span>
+
+            </a>
+
+
+            <a href="/units">
+
+                <span class="menu-icon">🏢</span>
+
+                <span>
+                    واحدهای دانشگاه
+                </span>
+
+            </a>
+
+
+            <a href="/evaluation">
+
+                <span class="menu-icon">📊</span>
+
+                <span>
+                    ارزیابی واحدها
+                </span>
+
+            </a>
+
+
+            <a href="/evaluation_pro">
+
+                <span class="menu-icon">📋</span>
+
+                <span>
+                    ارزیابی حرفه‌ای
+                </span>
+
+            </a>
+
+
+            <div class="menu-title">
+                مدیریت اطلاعات
+            </div>
+
+
+            <a href="/manage_posts" class="menu-item">
+    📋 مدیریت پست‌ها
+</a>
+
+<a href="/logout" class="menu-item logout">
+    🚪 خروج از سامانه
+</a>
+
+
+                <span class="menu-icon">👥</span>
+
+                <span>
+                    مدیریت پست‌ها
+                </span>
+
+            </a>
+
+
+            <a href="/manage_posts">
+
+                <span class="menu-icon">✏️</span>
+
+                <span>
+                    ویرایش اطلاعات
+                </span>
+
+            </a>
+
+
+            <div class="menu-title">
+                گزارش‌ها
+            </div>
+
+
+            <a href="/dashboard">
+
+                <span class="menu-icon">📈</span>
+
+                <span>
+                    گزارش عملکرد
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <div
+            style="
+                margin-top:35px;
+                padding:15px;
+                background:rgba(255,255,255,0.06);
+                border-radius:12px;
+                font-size:10px;
+                line-height:2;
+                color:#9fb8ca;
+                text-align:center;
+            "
+        >
+
+            سامانه پایش دانشگاه فرهنگیان تهران
+
+            <br>
+
+            نسخه مدیریتی
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+
+            <div class="top-title">
+
+                <h1>
+                    داشبورد مدیریتی
+                </h1>
+
+                <p>
+                    نمای کلی وضعیت ساختار و ارزیابی دانشگاه
+                </p>
+
+            </div>
+
+
+<div class="admin-badge">
+
+    <div class="admin-icon">
+        👤
+    </div>
+
+    <span>
+
+        {% if user_role == "admin" %}
+            پنل مدیریت دانشگاه
+
+        {% elif user_role == "president" %}
+            پنل ریاست دانشگاه
+
+        {% elif user_role == "deputy" %}
+            پنل معاونت
+
+        {% elif user_role == "manager" %}
+            پنل مدیریت واحد
+
+        {% else %}
+            پنل کاربری
+        {% endif %}
+
+    </span>
+
+</div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <div class="content">
+
+
+            <!-- WELCOME -->
+
+            <section class="welcome">
+
+    <h2>
+        خوش آمدید {{ session.get('full_name') }} 🌹
+    </h2>
+
+    <p>
+        {{ session.get('position') }}
+    </p>
+
+    <p>
+        در این بخش می‌توانید وضعیت واحدها، ساختار سازمانی،
+        پست‌های سازمانی و نتایج ارزیابی‌ها را مشاهده و مدیریت کنید.
+    </p>
+
+</section>
+
+
+            <!-- STATISTICS -->
+
+            <section class="cards">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        📋
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            تعداد کل پست‌ها
+                        </span>
+
+                        <strong>
+                            {{ total_posts }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        👤
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            پست‌های شاغل
+                        </span>
+
+                        <strong>
+                            {{ occupied }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        ⚠️
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            پست‌های خالی
+                        </span>
+
+                        <strong>
+                            {{ vacant }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        🏢
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>
+                            تعداد واحدها
+                        </span>
+
+                        <strong>
+                            {{ units_count }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <section class="section">
+
+
+                <div class="section-header">
+
+                    <h2>
+                        دسترسی سریع
+                    </h2>
+
+                    <span>
+                        عملیات مدیریتی
+                    </span>
+
+                </div>
+
+
+                <div class="actions">
+
+
+                    <a
+                        href="/evaluation"
+                        class="action"
+                    >
+
+                        <div class="action-icon">
+                            📊
+                        </div>
+
+                        <strong>
+                            ارزیابی واحدها
+                        </strong>
+
+                        <small>
+                            مشاهده و ثبت ارزیابی
+                        </small>
+
+                    </a>
+
+
+                    <a
+                        href="/evaluation_pro"
+                        class="action"
+                    >
+
+                        <div class="action-icon">
+                            📋
+                        </div>
+
+                        <strong>
+                            ارزیابی حرفه‌ای
+                        </strong>
+
+                        <small>
+                            ارزیابی بر اساس شاخص‌ها
+                        </small>
+
+                    </a>
+
+
+                    <a
+                        href="/units"
+                        class="action"
+                    >
+
+                        <div class="action-icon">
+                            🏢
+                        </div>
+
+                        <strong>
+                            واحدهای دانشگاه
+                        </strong>
+
+                        <small>
+                            مشاهده واحدها
+                        </small>
+
+                    </a>
+
+
+                    <a
+                        href="/manage_posts"
+                        class="action"
+                    >
+
+                        {% if user_role == "admin" %}
+
+<a href="/manage_users" class="action-card">
+
+    <div class="action-icon">
+        👤
+    </div>
+
+    <strong>
+        مدیریت کاربران
+    </strong>
+
+    <small>
+        ایجاد و مدیریت کاربران سامانه
+    </small>
+
+</a>
+
+{% endif %}
+
+                        <small>
+                            مشاهده و ویرایش اطلاعات
+                        </small>
+
+                    </a>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- EVALUATIONS -->
+
+            <section class="section">
+
+
+                <div class="section-header">
+
+                    <h2>
+                        📊 ارزیابی‌های ثبت‌شده
+                    </h2>
+
+                    <span>
+                        تعداد:
+                        {{ evaluations|length }}
+                    </span>
+
+                </div>
+
+
+                {% if evaluations %}
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    ردیف
+                                </th>
+
+                                <th>
+                                    واحد
+                                </th>
+
+                                <th>
+                                    امتیاز کل
+                                </th>
+
+                                <th>
+                                    میانگین
+                                </th>
+
+                                <th>
+                                    وضعیت
+                                </th>
+
+                                <th>
+                                    توضیحات
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                        {% for evaluation in evaluations %}
+
+
+                            <tr>
+
+                                <td>
+                                    {{ loop.index }}
+                                </td>
+
+                                <td>
+                                    <strong>
+                                        {{ evaluation.unit }}
+                                    </strong>
+                                </td>
+
+                                <td class="score">
+
+                                    {{ evaluation.total_score }}
+
+                                    <small>
+                                        از 600
+                                    </small>
+
+                                </td>
+
+                                <td class="score">
+
+                                    {{ evaluation.average_score }}
+
+                                    <small>
+                                        از 100
+                                    </small>
+
+                                </td>
+
+                                <td>
+
+
+                                    {% if evaluation.status == "عالی" %}
+
+                                        <span class="status excellent">
+                                            عالی
+                                        </span>
+
+
+                                    {% elif evaluation.status == "خوب" %}
+
+                                        <span class="status good">
+                                            خوب
+                                        </span>
+
+
+                                    {% elif evaluation.status == "متوسط" %}
+
+                                        <span class="status medium">
+                                            متوسط
+                                        </span>
+
+
+                                    {% else %}
+
+                                        <span class="status weak">
+                                            نیازمند بهبود
+                                        </span>
+
+                                    {% endif %}
+
+
+                                </td>
+
+                                <td>
+
+                                    {{ evaluation.description or "-" }}
+
+                                </td>
+
+                            </tr>
+
+
+                        {% endfor %}
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                {% else %}
+
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        📊
+                    </div>
+
+                    هنوز هیچ ارزیابی‌ای ثبت نشده است.
+
+                    <br>
+
+                    <br>
+
+                    برای شروع، از بخش «ارزیابی واحدها» استفاده کنید.
+
+                </div>
+
+
+                {% endif %}
+
+
+            </section>
+
+
+            <!-- UNIVERSITY STRUCTURE -->
+
+            <section class="section">
+
+
+                <div class="section-header">
+
+                    <h2>
+                        🏢 ساختار سازمانی دانشگاه
+                    </h2>
+
+                    <span>
+                        اطلاعات ثبت‌شده در سامانه
+                    </span>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+
+                    <table class="structure-table">
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    نوع واحد
+                                </th>
+
+                                <th>
+                                    واحد
+                                </th>
+
+                                <th>
+                                    بخش / معاونت
+                                </th>
+
+                                <th>
+                                    عنوان پست
+                                </th>
+
+                                <th>
+                                    نام فرد
+                                </th>
+
+                                <th>
+                                    وضعیت
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                        {% for row in rows %}
+
+
+                            <tr>
+
+                                <td>
+                                    {{ row[0] or "-" }}
+                                </td>
+
+                                <td>
+                                    {{ row[1] or "-" }}
+                                </td>
+
+                                <td>
+                                    {{ row[2] or "-" }}
+                                </td>
+
+                                <td>
+                                    {{ row[3] or "-" }}
+                                </td>
+
+                                <td>
+                                    {{ row[4] or "-" }}
+                                </td>
+
+                                <td>
+
+
+                                    {% if row[5] == "شاغل" %}
+
+                                        <span class="occupied-badge">
+                                            شاغل
+                                        </span>
+
+
+                                    {% elif row[5] == "خالی" %}
+
+                                        <span class="vacant-badge">
+                                            خالی
+                                        </span>
+
+
+                                    {% else %}
+
+                                        {{ row[5] or "-" }}
+
+                                    {% endif %}
+
+
+                                </td>
+
+                            </tr>
+
+
+                        {% endfor %}
+
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!-- FOOTER -->
+
+            <div class="footer">
+
+                سامانه ارزیابی و پایش دانشگاه فرهنگیان تهران
+
+                <br>
+
+                روابط عمومی دانشگاه فرهنگیان تهران
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

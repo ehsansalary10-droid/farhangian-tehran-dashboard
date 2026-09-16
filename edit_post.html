@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ویرایش پست</title>
+
+    <style>
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            color: #222;
+        }
+
+        .header {
+            background: #0f4c81;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: Tahoma;
+            font-size: 14px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 22px;
+            margin-top: 25px;
+            background: #1976a8;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: Tahoma;
+        }
+
+        .save {
+            background: #198754;
+        }
+
+        .back {
+            background: #6c757d;
+            margin-right: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>
+        ویرایش پست و اطلاعات فرد
+    </h1>
+
+    <p>
+        سامانه ارزیابی و پایش دانشگاه فرهنگیان تهران
+    </p>
+
+</div>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>
+            ویرایش اطلاعات
+        </h2>
+
+
+        <form method="POST">
+
+
+            <label>
+                نوع واحد
+            </label>
+
+            <input
+                type="text"
+                name="unit_type"
+                value="{{ post.unit_type or '' }}"
+            >
+
+
+            <label>
+                واحد
+            </label>
+
+            <input
+                type="text"
+                name="unit"
+                value="{{ post.unit or '' }}"
+            >
+
+
+            <label>
+                بخش / معاونت
+            </label>
+
+            <input
+                type="text"
+                name="department"
+                value="{{ post.department or '' }}"
+            >
+
+
+            <label>
+                عنوان پست
+            </label>
+
+            <input
+                type="text"
+                name="post_title"
+                value="{{ post.post_title or '' }}"
+            >
+
+
+            <label>
+                نام فرد
+            </label>
+
+            <input
+                type="text"
+                name="person_name"
+                value="{{ post.person_name or '' }}"
+            >
+
+
+            <label>
+                وضعیت
+            </label>
+
+            <select name="status">
+
+                <option value="شاغل"
+                    {% if post.status == "شاغل" %}selected{% endif %}>
+                    شاغل
+                </option>
+
+                <option value="خالی"
+                    {% if post.status == "خالی" %}selected{% endif %}>
+                    خالی
+                </option>
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="button save"
+            >
+                💾 ذخیره تغییرات
+            </button>
+
+
+            <a
+                href="/manage_posts"
+                class="button back"
+            >
+                بازگشت
+            </a>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

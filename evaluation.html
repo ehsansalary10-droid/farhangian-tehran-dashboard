@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ارزیابی واحدها</title>
+
+    <style>
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #17365d;
+            margin-bottom: 30px;
+        }
+
+        .item {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 18px;
+            background: #fafafa;
+        }
+
+        .item h3 {
+            margin-top: 0;
+            color: #17365d;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select,
+        input,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-family: Tahoma;
+        }
+
+        textarea {
+            height: 90px;
+            resize: vertical;
+        }
+
+        .score {
+            width: 150px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #17365d;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0f2745;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #17365d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="/dashboard" class="back">
+        ← بازگشت به داشبورد
+    </a>
+
+    <h1>
+        سامانه ارزیابی و پایش دانشگاه فرهنگیان تهران
+    </h1>
+
+    <form action="/save_evaluation" method="POST">
+
+        <div class="item">
+            <h3>۱. انتخاب واحد</h3>
+
+            <label>واحد مورد ارزیابی</label>
+<select name="unit" required>
+
+    <option value="">انتخاب کنید</option>
+
+    {% for unit in units %}
+
+        <option value="{{ unit }}" {% if unit == selected_unit %}selected{% endif %}>
+            {{ unit }}
+        </option>
+
+    {% endfor %}
+
+</select>        </div>
+
+
+        <div class="item">
+
+            <h3>۲. تحقق برنامه عملیاتی</h3>
+
+            <div class="description">
+                میزان اجرای برنامه‌های مصوب واحد در دوره ارزیابی
+            </div>
+
+            <label>امتیاز از ۱۰۰</label>
+
+            <input
+                class="score"
+                type="number"
+                name="planning"
+                min="0"
+                max="100"
+                required
+            >
+
+        </div>
+
+
+        <div class="item">
+
+            <h3>۳. وضعیت نیروی انسانی</h3>
+
+            <div class="description">
+                وضعیت تأمین، سازماندهی و بهره‌وری نیروی انسانی
+            </div>
+
+            <label>امتیاز از ۱۰۰</label>
+
+            <input
+                class="score"
+                type="number"
+                name="human_resources"
+                min="0"
+                max="100"
+                required
+            >
+
+        </div>
+
+
+        <div class="item">
+
+            <h3>۴. وضعیت آموزشی</h3>
+
+            <div class="description">
+                کیفیت و میزان تحقق فعالیت‌های آموزشی
+            </div>
+
+            <label>امتیاز از ۱۰۰</label>
+
+            <input
+                class="score"
+                type="number"
+                name="education"
+                min="0"
+                max="100"
+                required
+            >
+
+        </div>
+
+
+        <div class="item">
+
+            <h3>۵. وضعیت پژوهشی</h3>
+
+            <div class="description">
+                عملکرد واحد در حوزه پژوهش و فعالیت‌های علمی
+            </div>
+
+            <label>امتیاز از ۱۰۰</label>
+
+            <input
+                class="score"
+                type="number"
+                name="research"
+                min="0"
+                max="100"
+                required
+            >
+
+        </div>
+
+
+        <div class="item">
+
+            <h3>۶. وضعیت فرهنگی</h3>
+
+            <div class="description">
+                فعالیت‌های فرهنگی، اجتماعی و تربیتی
+            </div>
+
+            <label>امتیاز از ۱۰۰</label>
+
+            <input
+                class="score"
+                type="number"
+                name="culture"
+                min="0"
+                max="100"
+                required
+            >
+
+        </div>
+
+
+        <div class="item">
+
+            <h3>۷. زیرساخت و فناوری</h3>
+
+            <div class="description">
+                وضعیت زیرساخت، فناوری اطلاعات و خدمات هوشمند
+            </div>
+
+            <label>امتیاز از ۱۰۰</label>
+
+            <input
+                class="score"
+                type="number"
+                name="technology"
+                min="0"
+                max="100"
+                required
+            >
+
+        </div>
+
+
+        <div class="item">
+
+            <h3>۸. توضیحات و مستندات</h3>
+
+            <label>
+                توضیحات ارزیاب
+            </label>
+
+            <textarea
+                name="description"
+                placeholder="توضیحات، نقاط قوت، نقاط ضعف و مستندات مورد نیاز را وارد کنید..."
+            ></textarea>
+
+        </div>
+
+
+        <button type="submit">
+            ثبت ارزیابی
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

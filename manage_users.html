@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>مدیریت کاربران</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .header {
+            background: linear-gradient(
+                135deg,
+                #0d47a1,
+                #1976d2
+            );
+
+            color: white;
+            padding: 25px 40px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 25px;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .top-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-back {
+            background: #1976d2;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background: #125ca3;
+        }
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            background: #eef4fb;
+            color: #17365d;
+            font-weight: bold;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: right;
+        }
+
+        tr:hover {
+            background: #f8fbff;
+        }
+
+        .role {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #e8f1ff;
+            color: #1455a0;
+            font-size: 13px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+        }
+
+        .footer {
+            text-align: center;
+            margin: 30px 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <h1>
+            👥 مدیریت کاربران سامانه
+        </h1>
+
+        <p>
+            مدیریت حساب‌های کاربری و نقش‌های سامانه پایش دانشگاه فرهنگیان تهران
+        </p>
+
+    </header>
+
+
+    <div class="container">
+
+
+        <div class="top-actions">
+
+    <h2>
+        فهرست کاربران
+    </h2>
+
+    <div>
+
+        <a
+            href="/add_user"
+            class="btn btn-add"
+        >
+            ➕ افزودن کاربر جدید
+        </a>
+
+        <a
+            href="/dashboard"
+            class="btn btn-back"
+        >.btn-add {
+    background: #198754;
+    color: white;
+    margin-left: 10px;
+}
+
+.btn-add:hover {
+    background: #146c43;
+}
+            ← بازگشت به داشبورد
+        </a>
+
+    </div>
+
+</div>
+
+            <h2>
+                فهرست کاربران
+            </h2>
+
+            <a
+                href="/dashboard"
+                class="btn btn-back"
+            >
+                ← بازگشت به داشبورد
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            {% if users %}
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ردیف
+                        </th>
+
+                        <th>
+                            نام کاربری
+                        </th>
+
+                        <th>
+                            نام و نام خانوادگی
+                        </th>
+
+                        <th>
+                            سمت
+                        </th>
+
+                        <th>
+                            نقش
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for user in users %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td>
+                            {{ user["username"] }}
+                        </td>
+
+                        <td>
+                            {{ user["full_name"] or "-" }}
+                        </td>
+
+                        <td>
+                            {{ user["position"] or "-" }}
+                        </td>
+
+                        <td>
+
+                            <span class="role">
+                                {{ user["role"] or "user" }}
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="empty">
+
+                هنوز هیچ کاربری ثبت نشده است.
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="footer">
+
+            سامانه ارزیابی و پایش دانشگاه فرهنگیان تهران
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

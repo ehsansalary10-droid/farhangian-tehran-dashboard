@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ارزیابی واحدها</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f6f9;
+        }
+
+        .header {
+            background: #17365d;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #17365d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 13px;
+            text-align: center;
+        }
+
+        th {
+            background: #17365d;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f8f8;
+        }
+
+        .button {
+            display: inline-block;
+            background: #17365d;
+            color: white;
+            text-decoration: none;
+            padding: 9px 18px;
+            border-radius: 7px;
+        }
+
+        .back {
+            margin-bottom: 20px;
+        }
+
+        .evaluated {
+            color: #155724;
+            font-weight: bold;
+        }
+
+        .not-evaluated {
+            color: #856404;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>📊 ارزیابی واحدهای دانشگاه فرهنگیان تهران</h1>
+    <p>فهرست واحدها و وضعیت ارزیابی</p>
+</div>
+
+<div class="container">
+
+    <div class="back">
+        <a href="/dashboard" class="button">
+            ← بازگشت به داشبورد
+        </a>
+    </div>
+
+    <div class="section">
+
+        <h2>🏢 فهرست واحدها</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ردیف</th>
+                    <th>نام واحد</th>
+                    <th>وضعیت ارزیابی</th>
+                    <th>میانگین</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for unit in units %}
+
+                <tr>
+
+                    <td>{{ loop.index }}</td>
+
+                    <td>{{ unit }}</td>
+
+                    {% set unit_evaluation = namespace(found=false, average=0) %}
+
+                    {% for evaluation in evaluations %}
+
+                        {% if evaluation.unit == unit %}
+
+                            {% set unit_evaluation.found = true %}
+                            {% set unit_evaluation.average = evaluation.average_score %}
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    {% if unit_evaluation.found %}
+
+                        <td class="evaluated">
+                            ✓ ارزیابی شده
+                        </td>
+
+                        <td>
+                            {{ unit_evaluation.average }} از 100
+                        </td>
+
+                    {% else %}
+
+                        <td class="not-evaluated">
+                            ارزیابی نشده
+                        </td>
+
+                        <td>
+                            —
+                        </td>
+
+                    {% endif %}
+
+                    <td>
+
+<a href="/evaluation?unit={{ unit | urlencode }}" class="button">
+                            ➕ ثبت ارزیابی
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>مدیریت پست‌ها</title>
+
+    <style>
+
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            color: #222;
+        }
+
+        .header {
+            background: #0f4c81;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #0f4c81;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        tr:hover {
+            background: #f5f9ff;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #1976a8;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .button:hover {
+            opacity: 0.85;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>
+        مدیریت پست‌ها و کارکنان
+    </h1>
+
+    <p>
+        سامانه ارزیابی و پایش دانشگاه فرهنگیان تهران
+    </p>
+
+</div>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="top">
+
+            <h2>
+                فهرست پست‌ها
+            </h2>
+
+            <a href="/dashboard"
+               class="button">
+
+                بازگشت به داشبورد
+
+            </a>
+
+        </div>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ردیف</th>
+
+                    <th>نوع واحد</th>
+
+                    <th>واحد</th>
+
+                    <th>بخش / معاونت</th>
+
+                    <th>عنوان پست</th>
+
+                    <th>نام فرد</th>
+
+                    <th>وضعیت</th>
+
+                    <th>عملیات</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for post in posts %}
+
+                <tr>
+
+                    <td>
+                        {{ loop.index }}
+                    </td>
+
+                    <td>
+                        {{ post.unit_type or "-" }}
+                    </td>
+
+                    <td>
+                        {{ post.unit or "-" }}
+                    </td>
+
+                    <td>
+                        {{ post.department or "-" }}
+                    </td>
+
+                    <td>
+                        {{ post.post_title or "-" }}
+                    </td>
+
+                    <td>
+                        {{ post.person_name or "-" }}
+                    </td>
+
+                    <td>
+                        {{ post.status or "-" }}
+                    </td>
+
+                    <td>
+
+                        <a href="/edit_post/{{ post.id }}"
+                           class="button">
+
+                            ✏️ ویرایش
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
